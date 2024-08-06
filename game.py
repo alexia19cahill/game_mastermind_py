@@ -1,4 +1,5 @@
 import random
+from jugador import JugadorAdivina, JugadorCrea
 
 
 colores = ['rojo', 'azul', 'verde', 'amarillo']
