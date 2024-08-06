@@ -1,8 +1,9 @@
-colores = ['green', 'blue', 'red', 'yellow']
-class cuadro:
-    def _init_(self):
-        self.cuadro = [['⚪', '⚪', '⚪', '⚪', '⚪'] for _ in range(12)]
+import random
 
-    def mostrarcuadro(self):
-        for linea in self.cuadro:
-            print(' '.join(linea[:4]) + ' | ' + linea[4])
+
+colores = ['rojo', 'azul', 'verde', 'amarillo']
+
+def codigo_aleatorio():
+    return [random.choice(colores) for _ in range(4)]
+
+
