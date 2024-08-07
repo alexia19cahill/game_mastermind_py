@@ -1,6 +1,6 @@
 import random
-from jugador import JugadorAdivina, JugadorCrea
-
+from jugador import JugadorAdivinado, JugadorCrea
+from cuadro import Cuadro
 
 colores = ['rojo', 'azul', 'verde', 'amarillo']
 
@@ -24,5 +24,31 @@ def retroalimentacion(adivinanza, codigo):
             scodigo[scodigo.index(cadivinanza[i])] = None
 
     return retroalimentacion
+
+
+def main():
+    rol = input("¿Quieres ser el creador del codigo o el que adivina? (crear/adivinar): ").strip().lower()
+    if rol == 'crear':
+        jugador_creador = JugadorCrea(colores)
+        codigo = jugador_creador.crear_codigo()
+    else:
+        codigo = codigo_aleatorio()
+
+    print("********")
+    cuadro = Cuadro(colores)
+    jugador_adivinador = JugadorAdivinado(colores)
+    for turno in range(12):
+        adivinanza = jugador_adivinador.adivinanza()
+        retroalimentacion_result = retroalimentacion(adivinanza, codigo)
+        cuadro.actualizar_cuadro(turno, adivinanza, retroalimentacion_result)
+        cuadro.mostrar_cuadro()
+        if retroalimentacion_result == ['verde', 'verde', 'verde', 'verde']:
+            print("Felicidades adivinade el codigo.")
+            break
+    else:
+        print(f"Perdiste 😂. El código era: {' '.join(codigo)}")
+
+if __name__ == "__main__":
+    main()
 
 
