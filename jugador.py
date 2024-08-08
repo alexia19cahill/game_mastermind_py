@@ -12,6 +12,8 @@ class JugadorCrea:
             else:
                 print(f"ingresar 4 colores de {self.colores}.")
 
+    
+
 class JugadorAdivinado:
     def __init__(self, colores):
         self.colores = colores

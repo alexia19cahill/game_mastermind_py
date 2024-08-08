@@ -17,11 +17,11 @@ def retroalimentacion(adivinanza, codigo):
         if adivinanza[i] == scodigo[i]:
             retroalimentacion.append('verde')
             cadivinanza[i] = scodigo[i] = None
-
-    for i in range(4):
-        if cadivinanza[i] and cadivinanza[i] in scodigo:
+        elif cadivinanza[i] and cadivinanza[i] in scodigo:
             retroalimentacion.append('naranja')
             scodigo[scodigo.index(cadivinanza[i])] = None
+        else:
+            retroalimentacion.append("black")
 
     return retroalimentacion
 
@@ -31,22 +31,39 @@ def main():
     if rol == 'crear':
         jugador_creador = JugadorCrea(colores)
         codigo = jugador_creador.crear_codigo()
-    else:
+        
+        print("********")
+        cuadro = Cuadro(colores)
+        jugador_adivinador = JugadorAdivinado(colores)
+        for turno in range(12):
+            adivinanza = codigo_aleatorio()
+            retroalimentacion_result = retroalimentacion(adivinanza, codigo)
+            cuadro.actualizar_cuadro(turno, adivinanza, retroalimentacion_result)
+            cuadro.mostrar_cuadro()
+            if retroalimentacion_result == ['verde', 'verde', 'verde', 'verde']:
+                print("Felicidades adivinade el codigo.")
+                break
+            else:
+                print(f"Perdiste 😂. El código era: {' '.join(codigo)}")
+    elif rol == "adivinar":
+
         codigo = codigo_aleatorio()
 
-    print("********")
-    cuadro = Cuadro(colores)
-    jugador_adivinador = JugadorAdivinado(colores)
-    for turno in range(12):
-        adivinanza = jugador_adivinador.adivinanza()
-        retroalimentacion_result = retroalimentacion(adivinanza, codigo)
-        cuadro.actualizar_cuadro(turno, adivinanza, retroalimentacion_result)
-        cuadro.mostrar_cuadro()
-        if retroalimentacion_result == ['verde', 'verde', 'verde', 'verde']:
-            print("Felicidades adivinade el codigo.")
-            break
+        print("********")
+        cuadro = Cuadro(colores)
+        jugador_adivinador = JugadorAdivinado(colores)
+        for turno in range(12):
+            adivinanza = jugador_adivinador.adivinanza()
+            retroalimentacion_result = retroalimentacion(adivinanza, codigo)
+            cuadro.actualizar_cuadro(turno, adivinanza, retroalimentacion_result)
+            cuadro.mostrar_cuadro()
+            if retroalimentacion_result == ['verde', 'verde', 'verde', 'verde']:
+                print("Felicidades adivinade el codigo.")
+                break
+        else:
+            print(f"Perdiste 😂. El código era: {' '.join(codigo)}")
     else:
-        print(f"Perdiste 😂. El código era: {' '.join(codigo)}")
+        print("adios")
 
 if __name__ == "__main__":
     main()
